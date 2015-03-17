@@ -33,8 +33,6 @@ RUN sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php5/fpm/php-fpm.co
 RUN sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" /etc/php5/fpm/pool.d/www.conf
 RUN find /etc/php5/cli/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \;
 
-# nginx site conf
-ADD ./nginx-site.conf /etc/nginx/sites-available/default
 
 # Supervisor Config
 RUN /usr/bin/easy_install supervisor
@@ -52,6 +50,6 @@ EXPOSE 3306
 EXPOSE 80
 
 # volume for mysql database and wordpress install
-VOLUME ["/var/lib/mysql", "/usr/share/nginx/www", "/etc/nginx/sites-available/default"]
+VOLUME ["/var/lib/mysql", "/usr/share/nginx/www", "/etc/nginx/sites-available"]
 
 CMD ["/bin/bash", "/start.sh"]
